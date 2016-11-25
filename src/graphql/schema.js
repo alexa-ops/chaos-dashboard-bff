@@ -17,15 +17,21 @@ module.exports = graphql.buildSchema(`
         Key: String
         Value: String
     }
+
     type InstanceState {
         Code: Int!
         Name: String!
+    }
+
+    type InstancePlacement {
+        AvailabilityZone: String!
     }
 
     type Instance {
         InstanceId: String!
         ImageId: String!
         State: InstanceState!
+        Placement: InstancePlacement!
         Tags: [Tag!]
     }
 
