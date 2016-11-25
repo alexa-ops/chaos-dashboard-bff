@@ -26,13 +26,14 @@ const invokeLambda = (lambdaName, event) => {
     });
 }
 
-const countBy = (args) => {
-    const lambdaName = process.env.COUNT_LAMBDA;
+const lambdaResolver = (lambdaName, getEvent) =>
+    (args) => invokeLambda(lambdaName, getEvent(args))
+                .then((data) => JSON.parse(data.Payload));
 
-    return invokeLambda(lambdaName, { selector: args.selector })
-            .then((data) => JSON.parse(data.Payload));
-}
+const countBy = lambdaResolver(process.env.COUNT_LAMBDA, (args) => ({ selector: args.selector }));
+const list = lambdaResolver(process.env.LIST_LAMBDA, (args) => ({ state: args.state }));
 
 module.exports = {
     countBy,
+    list,
 };

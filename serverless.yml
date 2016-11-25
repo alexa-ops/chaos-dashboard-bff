@@ -30,7 +30,9 @@ functions:
     timeout: 10
     environment:
       COUNT_LAMBDA: ${self:custom.chaosService}-${opt:stage}-instanceCount
+      LIST_LAMBDA: ${self:custom.chaosService}-${opt:stage}-instanceList
     events:
         - http:
             path: graphql
             method: post
+            cors: true
